@@ -12,6 +12,7 @@ PImage ambiente;
 PImage solar;
 PImage humedad;
 PImage co;
+float data=0;
 void setup() {
   
   size(1300, 650);
@@ -25,7 +26,7 @@ void setup() {
   ambiente=loadImage("ambiente1.png");
   solar=loadImage("sol1.png");
   humedad=loadImage("humedad1.png");
-  co=loadImage("co21.png");
+  co=loadImage("co222.png");
 }
 
 void draw() {
@@ -48,6 +49,12 @@ void draw() {
   fill(11,16,20);
   textSize(18);
   text("Temperatura Interior",101,125);
+  textSize(40);
+  text(data,210,235);
+  textSize(40);
+  text("C",325,235);
+  image(back,75,160);
+
   //CUADRO 2
   fill(#E4E5E4);
   stroke(#0F2ABD);
@@ -60,7 +67,10 @@ void draw() {
   fill(11,16,20);
   textSize(18);
   text("Temperatura Exterior",526,125);
-  
+  textSize(40);
+  text(data,650,235);
+  textSize(40);
+  text("C",765,235);
   //CUADRO 3
   fill(#E4E5E4);
   stroke(#0F2ABD);
@@ -73,6 +83,10 @@ void draw() {
   fill(11,16,20);
   textSize(18);
   text("Cantidad de luz en el ambiente",931,125);
+  textSize(40);
+  text(data,1040,235);
+  textSize(40);
+  text("lm",1150,235);
   //CUADRO 4
   fill(#E4E5E4);
   stroke(#0F2ABD);
@@ -85,6 +99,10 @@ void draw() {
   fill(11,16,20);
   textSize(18);
   text("Humedad en el ambiente",101,390);
+  textSize(65);
+  text(data,275,525);
+  textSize(65);
+  text("%",449,525);
   //CUADRO 5
   fill(#E4E5E4);
   stroke(#0F2ABD);
@@ -98,11 +116,14 @@ void draw() {
   fill(11,16,20);
   textSize(18);
   text("Calidad del aire",725,390);
-  image(back,75,160);
+  textSize(65);
+  text(data,885,525);
+  textSize(65);
+  text("%",1065,525);
   image(ambiente,500,160);
   image(solar,900,160);
   image(humedad,75,460);
-  image(co,700,460);
+  image(co,700,440);
   //image(pic,mouseX-pic.width/2,mouseY-pic.height/2);
   /*image(img, 90, 45);
   image(img, mouseX-img.width/2, mouseY-img.height/2);*/
