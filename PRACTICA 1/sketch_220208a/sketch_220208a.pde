@@ -32,6 +32,7 @@ void setup() {
 void draw() {
   //FONDO
   //background(11,16,20);
+  
   background(#E4E5E4);
   //background(back);
   fill(#555955);
@@ -53,6 +54,10 @@ void draw() {
   text(data,210,235);
   textSize(40);
   text("C",325,235);
+  fill(#EC1919);
+  rect(137,200,5,70,27);
+  fill(#E4E5E4);
+  rect(137,200,5,60,27);
   image(back,75,160);
 
   //CUADRO 2
@@ -71,6 +76,13 @@ void draw() {
   text(data,650,235);
   textSize(40);
   text("C",765,235);
+  fill(#EC1919);
+  rect(534,180,5,93,27);
+  fill(#E4E5E4);
+  rect(534,180,5,80,27);
+  image(ambiente,500,160);
+  
+  
   //CUADRO 3
   fill(#E4E5E4);
   stroke(#0F2ABD);
@@ -87,6 +99,10 @@ void draw() {
   text(data,1040,235);
   textSize(40);
   text("lm",1150,235);
+  fill(#FFE42F);
+  arc(965, 225, 65, 65, 0, PI+HALF_PI, PIE);
+  image(solar,900,160);
+  
   //CUADRO 4
   fill(#E4E5E4);
   stroke(#0F2ABD);
@@ -103,6 +119,10 @@ void draw() {
   text(data,275,525);
   textSize(65);
   text("%",449,525);
+  fill(#009999);
+  arc(137,544, 65, 90, 0, PI, PIE);
+  image(humedad,75,460);
+  
   //CUADRO 5
   fill(#E4E5E4);
   stroke(#0F2ABD);
@@ -120,10 +140,11 @@ void draw() {
   text(data,885,525);
   textSize(65);
   text("%",1065,525);
-  image(ambiente,500,160);
-  image(solar,900,160);
-  image(humedad,75,460);
   image(co,700,440);
+  
+  
+  
+  
   //image(pic,mouseX-pic.width/2,mouseY-pic.height/2);
   /*image(img, 90, 45);
   image(img, mouseX-img.width/2, mouseY-img.height/2);*/
