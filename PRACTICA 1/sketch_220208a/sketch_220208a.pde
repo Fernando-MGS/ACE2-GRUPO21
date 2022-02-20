@@ -1,6 +1,6 @@
 /**
- * Create Image. 
- * 
+ * Create Image.
+ *
  * The createImage() function provides a fresh buffer of pixels to play with.
  * This example creates an image gradient.
  */
@@ -13,14 +13,29 @@ PImage solar;
 PImage humedad;
 PImage co;
 float data=0;
+float temp1;
+float temp2;
+float hum;
+float luz;
+float pluz;
+float phumedad;
+int lastSeconds = 0;
+int tiempoConsulta = 0;
+
 void setup() {
-  
+
   size(1300, 650);
   img = createImage(115, 230, ARGB);
-  for(int i = 0; i < img.pixels.length; i++) {
+  for (int i = 0; i < img.pixels.length; i++) {
     float a = map(i, 0, img.pixels.length, 255, 0);
     img.pixels[i] = color(0, 153, 204, a);
   }
+  temp2=getTemp();
+  temp1=getTemp();
+  luz=getLum();
+  pluz=turnLum();
+  hum=getHum();
+  phumedad=turnHum();
   pic=loadImage("humedad1.png");
   back=loadImage("interior5.png");
   ambiente=loadImage("ambiente1.png");
@@ -30,122 +45,230 @@ void setup() {
 }
 
 void draw() {
-  //FONDO
-  //background(11,16,20);
-  
   background(#E4E5E4);
+
+  int currentSeconds = second();
+  boolean consultar = false;
+
+  if (currentSeconds != lastSeconds) {
+    tiempoConsulta = tiempoConsulta + 1;
+    if (tiempoConsulta == 5) {
+      tiempoConsulta = 0;
+      consultar = true;
+    }
+  }
+  lastSeconds=currentSeconds;
+  if (consultar) {
+    temp1=getTemp();
+    temp2=getTemp();
+    luz=getLum();
+    hum=getHum();
+    pluz=turnLum();
+    phumedad=turnHum();
+  }
   //background(back);
   fill(#555955);
   textSize(95);
-  text("DASHBOARD", 409,85);
+  text("DASHBOARD", 409, 85);
   //CUADRO 1
   fill(#E4E5E4);
   stroke(#0F2ABD);
   strokeWeight(3);
-  rect(60,120,340,200,24);
+  rect(60, 120, 340, 200, 24);
   strokeWeight(0);
-  stroke(228, 126, 42,1);
+  stroke(228, 126, 42, 1);
   fill(#E4E5E4);
-  rect(93,117,170,10);
-  fill(11,16,20);
+  rect(93, 117, 170, 10);
+  fill(11, 16, 20);
   textSize(18);
-  text("Temperatura Interior",101,125);
+  text("Temperatura Interior", 101, 125);
   textSize(40);
-  text(data,210,235);
+  text(temp1, 210, 235);
   textSize(40);
-  text("C",325,235);
-  fill(#EC1919);
-  rect(137,200,5,70,27);
-  fill(#E4E5E4);
-  rect(137,200,5,60,27);
-  image(back,75,160);
+  text("C", 325, 235);
+  fill(#EC1919);//barra roja
+  rect(137, 200, 5, 70, 27);
+  fill(#E4E5E4);//Barra gris
+  rect(137, 200, 5, 70-temp1, 27);
+  image(back, 75, 160);
 
   //CUADRO 2
   fill(#E4E5E4);
   stroke(#0F2ABD);
   strokeWeight(3);
-  rect(485,120,340,200,24);
+  rect(485, 120, 340, 200, 24);
   strokeWeight(0);
-  stroke(228, 126, 42,1);
+  stroke(228, 126, 42, 1);
   fill(#E4E5E4);
-  rect(518,117,170,10);
-  fill(11,16,20);
+  rect(518, 117, 170, 10);
+  fill(11, 16, 20);
   textSize(18);
-  text("Temperatura Exterior",526,125);
+  text("Temperatura Exterior", 526, 125);
   textSize(40);
-  text(data,650,235);
+  text(temp2, 650, 235);
   textSize(40);
-  text("C",765,235);
-  fill(#EC1919);
-  rect(534,180,5,93,27);
-  fill(#E4E5E4);
-  rect(534,180,5,80,27);
-  image(ambiente,500,160);
-  
-  
+  text("C", 765, 235);
+  fill(#EC1919);//barra roja
+  rect(534, 180, 5, 93, 27);
+  fill(#E4E5E4);//barra gris
+  rect(534, 180, 5, 93-temp2, 27);
+  image(ambiente, 500, 160);
+
+
   //CUADRO 3
   fill(#E4E5E4);
   stroke(#0F2ABD);
   strokeWeight(3);
-  rect(890,120,340,200,24);
+  rect(890, 120, 340, 200, 24);
   strokeWeight(0);
-  stroke(228, 126, 42,1);
+  stroke(228, 126, 42, 1);
   fill(#E4E5E4);
-  rect(923,117,245,10);
-  fill(11,16,20);
+  rect(923, 117, 245, 10);
+  fill(11, 16, 20);
   textSize(18);
-  text("Cantidad de luz en el ambiente",931,125);
+  text("Cantidad de luz en el ambiente", 931, 125);
   textSize(40);
-  text(data,1040,235);
+  text(luz, 1040, 235);
   textSize(40);
-  text("lm",1150,235);
+  text("lm", 1180, 235);
   fill(#FFE42F);
-  arc(965, 225, 65, 65, 0, PI+HALF_PI, PIE);
-  image(solar,900,160);
-  
+  arc(965, 225, 65, 65, 0, pluz, PIE);
+  image(solar, 900, 160);
+
   //CUADRO 4
   fill(#E4E5E4);
   stroke(#0F2ABD);
   strokeWeight(3);
-  rect(60,385,550,250,24);
+  rect(60, 385, 550, 250, 24);
   strokeWeight(0);
-  stroke(228, 126, 42,1);
+  stroke(228, 126, 42, 1);
   fill(#E4E5E4);
-  rect(93,384,204,10);
-  fill(11,16,20);
+  rect(93, 384, 204, 10);
+  fill(11, 16, 20);
   textSize(18);
-  text("Humedad en el ambiente",101,390);
+  text("Humedad en el ambiente", 101, 390);
   textSize(65);
-  text(data,275,525);
+  text(hum, 275, 525);
   textSize(65);
-  text("%",449,525);
+  text("%", 462, 525);
   fill(#009999);
-  arc(137,544, 65, 90, 0, PI, PIE);
-  image(humedad,75,460);
-  
+  arc(137, 544, 65, 90, 0, phumedad, PIE);
+  image(humedad, 75, 460);
+
   //CUADRO 5
   fill(#E4E5E4);
   stroke(#0F2ABD);
   strokeWeight(3);
-  rect(680,385,550,250,24);
+  rect(680, 385, 550, 250, 24);
   strokeWeight(0);
-  stroke(228, 126, 42,1);
+  stroke(228, 126, 42, 1);
   fill(#E4E5E4);
-  rect(713,384,142,10);
+  rect(713, 384, 142, 10);
   //fill(196,252,250);
-  fill(11,16,20);
+  fill(11, 16, 20);
   textSize(18);
-  text("Calidad del aire",725,390);
+  text("Calidad del aire", 725, 390);
   textSize(65);
-  text(data,885,525);
+  text(data, 885, 525);
   textSize(65);
-  text("%",1065,525);
-  image(co,700,440);
-  
-  
-  
-  
+  text("%", 1065, 525);
+  image(co, 700, 440);
   //image(pic,mouseX-pic.width/2,mouseY-pic.height/2);
   /*image(img, 90, 45);
-  image(img, mouseX-img.width/2, mouseY-img.height/2);*/
+   image(img, mouseX-img.width/2, mouseY-img.height/2);*/
+}
+
+float getTemp() {
+  float temperatura=0;
+  //println("---");
+  try {
+    String[] texto = loadStrings("http://localhost:8080/temperatura");
+    //println(texto[0]);
+    return Float.valueOf(texto[0]);
+  }
+  catch(Exception ex) {
+    //println(ex);
+  }
+  return temperatura;
+}
+
+float getLum() {
+  float lum=0;
+  //println("---luz");
+  try {
+    String[] texto = loadStrings("http://localhost:8080/luz");
+    //println("Lum:"+texto[0]);
+    lum=Float.valueOf(texto[0]);
+    return lum;
+  }
+  catch(Exception ex) {
+    //println(ex);
+  }
+  return lum;
+}
+
+float getHum() {
+  float hum=0;
+  //println("---luz");
+  try {
+    String[] texto = loadStrings("http://localhost:8080/humedad");
+    //println("Lum:"+texto[0]);
+    hum=Float.valueOf(texto[0]);
+    return hum;
+  }
+  catch(Exception ex) {
+    //println(ex);
+  }
+  return hum;
+}
+
+float turnLum(){
+  float ret=0;
+  if(luz<=100){
+    println(100);
+     // ret=  luz*(90/100)*(3.14159/180);
+    }else if (luz<=200){
+      //ret=  luz*(180/200)*(3.14159/180);
+      ret=HALF_PI;
+      println(200);
+    }else if(luz <=300){
+      //ret=  luz*(270/300)*(3.14159/180);
+      println(300);
+      ret=PI;
+    }else if(luz<400){
+      println(400);
+      ret=PI+HALF_PI;
+      //ret=  luz*(360/400)*(3.14159/180);
+    }else{
+      println(500);
+      ret=PI+PI;
+    }
+   // println(luz+"%="+ret);
+  return ret;
+}
+float turnHum(){
+  float ret=0;
+  /*if(hum<=25){
+    println(100);
+    ret=(hum/100)*(PI+PI);
+     // ret=  luz*(90/100)*(3.14159/180);
+    }else if (hum<=50){
+      //ret=  luz*(180/200)*(3.14159/180);
+      ret=(hum/100)*PI;
+      println(200);
+    }else if(hum <=75){
+      //ret=  luz*(270/300)*(3.14159/180);
+      println(300);
+      ret=(hum/100)*(PI+HALF_PI);
+    }else if(hum<100){
+      println(400);
+      ret=(hum/100)*(PI+PI);
+      //ret=  luz*(360/400)*(3.14159/180);
+    }else{
+      println(500);
+      ret=PI+PI;
+    }*/
+    ret=(hum/100)*(PI+PI);
+    println(hum+"%="+ret);
+  return ret;
 }
