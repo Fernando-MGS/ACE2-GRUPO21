@@ -12,11 +12,11 @@ client = MongoClient(mongodb_Host)
 puerto_serial = 'COM4'
 
 #Activacion de la conexion arduino
-arduino = serial.Serial(puerto_serial, 9600)
-time.sleep(2)
-dato_leido = arduino.readline().decode('utf-8').strip()
-print(dato_leido)
-arduino.close()
+#arduino = serial.Serial(puerto_serial, 9600)
+#time.sleep(2)
+#dato_leido = arduino.readline().decode('utf-8').strip()
+#print(dato_leido)
+#arduino.close()
 
 ##Dato leido sera lo que se guardara en la db, idealmente sera un texto convertible a array con coma o punto y coma
 
@@ -24,4 +24,4 @@ arduino.close()
 db = client[dbNombre]
 collection = db['Magnitudes']
 
-collection.insert_one({'Temperatura interior': 23, 'Temperatura exterior': 31, 'Fecha': datetime.datetime.now()})
+collection.insert_one({'Temperatura interior': 20, 'Temperatura exterior': 17, 'Luz':110, 'Humedad':40.7, 'CO2':18, 'Fecha': datetime.datetime.now()})

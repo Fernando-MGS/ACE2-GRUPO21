@@ -1,6 +1,7 @@
 const express= require('express');
 const cors = require("cors");
 const bodyParser = require('body-parser');
+const { default: mongoose } = require('./database');
 
 const PORT = process.env.PORT || 8080;
 const app= express();
@@ -24,6 +25,8 @@ app.listen(PORT, ()=> console.log(`Server running on port ${PORT} `));
 app.get('/',  function(req, res){
     res.send(" WELCOME TO APP!");
 });
+
+app.use('/grafica', require('./routes/task.route'));
 
 app.get('/temperatura',  function(req, res){
     data=  Math.random() * (60 - 15) + 15
