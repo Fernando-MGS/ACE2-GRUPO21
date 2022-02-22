@@ -1,10 +1,4 @@
-/**
- * Create Image.
- *
- * The createImage() function provides a fresh buffer of pixels to play with.
- * This example creates an image gradient.
- */
-
+SistemaParticulas sistemaParticulas;
 PImage img;
 PImage pic;
 PImage back;
@@ -19,12 +13,14 @@ float hum;
 float luz;
 float pluz;
 float phumedad;
+float velocidad = 0;
 int lastSeconds = 0;
 int tiempoConsulta = 0;
 
 void setup() {
 
   size(1300, 650);
+  sistemaParticulas = new SistemaParticulas(new PVector(740,555));
   img = createImage(115, 230, ARGB);
   for (int i = 0; i < img.pixels.length; i++) {
     float a = map(i, 0, img.pixels.length, 255, 0);
@@ -36,6 +32,7 @@ void setup() {
   pluz=turnLum();
   hum=getHum();
   phumedad=turnHum();
+  velocidad = getVelocidad();
   pic=loadImage("humedad1.png");
   back=loadImage("interior5.png");
   ambiente=loadImage("ambiente1.png");
@@ -66,6 +63,27 @@ void draw() {
     pluz=turnLum();
     phumedad=turnHum();
   }
+  float velocidadAnimacion =  velocidad;
+  if(velocidad >= 100){
+    velocidadAnimacion = 0.5;
+  } else if(velocidad >= 50) {
+    velocidadAnimacion = 0.4;
+  } else if (velocidad >= 40) {
+    velocidadAnimacion = 0.3;
+  } else if (velocidad >= 30) {
+    velocidadAnimacion = 0.1;
+  } else if (velocidad >= 20) {
+    velocidadAnimacion = 0.05;
+  } else if (velocidad >= 10) {
+    velocidadAnimacion = 0.03;
+  } else if (velocidad >= 1) {
+    velocidadAnimacion = 0.01;
+  } else if (velocidad >= 0) {
+    velocidadAnimacion = 0;
+  }
+  
+  
+  
   //background(back);
   fill(#555955);
   textSize(95);
@@ -169,10 +187,13 @@ void draw() {
   textSize(18);
   text("Calidad del aire", 725, 390);
   textSize(65);
-  text(data, 885, 525);
+  text(data, 800, 510);
   textSize(65);
-  text("%", 1065, 525);
-  image(co, 700, 440);
+  text("ppm", 980, 510);
+  
+  
+  sistemaParticulas.agregarParticula(temp1, velocidadAnimacion);
+  sistemaParticulas.run();
   //image(pic,mouseX-pic.width/2,mouseY-pic.height/2);
   /*image(img, 90, 45);
    image(img, mouseX-img.width/2, mouseY-img.height/2);*/
@@ -190,6 +211,21 @@ float getTemp() {
     //println(ex);
   }
   return temperatura;
+}
+
+float getVelocidad() {
+  float velocidad = 0;
+  
+  try {
+    String[] texto = loadStrings("http://localhost:8080/velocidad");
+  
+    return Float.valueOf(texto[0]);
+    
+  } catch(Exception ex) {
+    //println(ex);
+  }
+  
+  return velocidad;
 }
 
 float getLum() {
@@ -224,7 +260,13 @@ float getHum() {
 
 float turnLum(){
   float ret=0;
-  if(luz<=100){
+  if(luz<400){
+    ret=(luz/400)*(PI+PI);
+  }else{
+    ret=PI+PI;
+  }
+  
+  /*if(luz<=100){
     println(100);
      // ret=  luz*(90/100)*(3.14159/180);
     }else if (luz<=200){
@@ -242,7 +284,7 @@ float turnLum(){
     }else{
       println(500);
       ret=PI+PI;
-    }
+    }*/
    // println(luz+"%="+ret);
   return ret;
 }
