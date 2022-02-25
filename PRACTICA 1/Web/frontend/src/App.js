@@ -3,6 +3,11 @@ import './App.css';
 import { useState,useEffect } from 'react';
 import {UserData} from './Data'
 import BarChart from './components/BarChart';
+import Humedad from './components/Humedad';
+import TempExt from './components/TempExt';
+import TempInt from './components/TempInt';
+import Luz from './components/Luz';
+
 
 function App() {
   //const [userData,setUserData] = useState();
@@ -18,9 +23,9 @@ function App() {
     }catch(error){
       console.log("Algo salió mal");
     }
-  });
+  },[]);
 
-  const [userData,setUserData] = useState({
+  const [userData,setUserData] = useState([{
     labels:UserData.map((data)=>data.year),
     datasets:[
       {
@@ -31,10 +36,15 @@ function App() {
         borderColor: "rgba(75,192,192,1)"
       }
     ],
-  });
+  }]);
   return (
     <div className="App">
+      aa
       <BarChart chartData={userData}/>
+      <Humedad chartData={userData}/>
+      <Luz chartData={userData}/>
+      <TempExt chartData={userData}/>
+      <TempInt chartData={userData}/>
     </div>
   );
 }

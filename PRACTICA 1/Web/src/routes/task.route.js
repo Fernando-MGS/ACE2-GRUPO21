@@ -11,10 +11,10 @@ router.get('/',(req,res)=>{
     });
 });
 
-router.get('/Magnitudes',async(req,res)=>{
+/*router.get('/Magnitudes',async(req,res)=>{
     const Magnitudes = await Magnitud.findOne({}, {}, {sort: {"Fecha": -1}});
     console.log(Magnitudes["TemperaturaInterior"]);
     res.json(Magnitudes);
-});
+});*/
 
 module.exports=router;
