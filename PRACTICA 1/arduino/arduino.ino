@@ -15,6 +15,7 @@ float temperaturaDHT;
 //read-only para el sensor de temperatura
 const int tempLM35 = A1;
 
+
 //constantes para el sensor de calidad de aire
 #define pinMQ135     A0  //entrada de datos                      
 #define co2Zero     206.85 //para calibrar el sensor de CO2 nivel 0
@@ -35,64 +36,29 @@ sensorLuz.begin();//INICIANDO SENSOR DE LUZ DE INTENSIDAD
 
 void loop() {
   //getTempAndHumid();
-  //etCO2();
-  //getTemp();
-  getLight();
- }
-
-//obtener Humedad y temperatura
-void getTempAndHumid(){
-  
-humedadDHT = sensorDHT.readHumidity();
-temperaturaDHT = sensorDHT.readTemperature();
-
+  humedadDHT = sensorDHT.readHumidity();
+  temperaturaDHT = sensorDHT.readTemperature();
   if(isnan(humedadDHT)||isnan(temperaturaDHT)){
-    Serial.println("ERROR AL OBTENER LOS DATOS");
+  Serial.println("ERROR AL OBTENER LOS DATOS");
     return;
     }
   //indice de calor
   float hic = sensorDHT.computeHeatIndex(temperaturaDHT,humedadDHT,false);
-  //
-  Serial.print ("Humedad: ");
-  Serial.print(humedadDHT);
-  Serial.print(" %\t");
-  Serial.print("Temperatura: ");
-  Serial.print(temperaturaDHT);
-  Serial.print(" °C ");
-  Serial.print("Indice de Calor: ");
-  Serial.print(hic);
-  Serial.println(" ");
-  delay(3000);
-  }
-  //////////////
- 
-//metodo para calcular el CO2 calidad del aire 
-void getCO2() 
-{
   
-  float ppm = gasSensor.getPPM();
-  Serial.print("Calidad del aire = ");
-  Serial.print(ppm);  
-  Serial.println(" PPM");
-  delay(3000);             
-}
-///
-//metodo para obtener la temperatura con sensor lm35
-void getTemp(){
-  float temp;
-  temp= analogRead(tempLM35);
-  temp=temp*0.48828125;
-  Serial.print ("Temperatura: ");
-  Serial.print(temp);
-  Serial.println("°C");
-  delay(3000);
+  //getCO2();
+   float ppm = gasSensor.getPPM();
   
-  }
-  //metodo para obtenera la intensidad de luz en lux = lumen/m^2
-  void getLight(){
-    float lux = sensorLuz.readLightLevel();
-    Serial.print("Intensidad de luz = ");
-    Serial.print(lux);
-    Serial.println("lumen/m^2");
+
+  //getTemp();
+  int value =analogRead(tempLM35);
+  float millivolts=(value/1023.0)*5000;
+  //Serial.print ("Temperatura: ");
+  float tempCelsius = millivolts/10;
+  
+  //getLight();
+   float lux = sensorLuz.readLightLevel();    
+    Serial.println(String(temperaturaDHT,2)+","+String(tempCelsius,2)+","+String(lux,2)+","+String(humedadDHT,2)+","+String(ppm,2));
     delay(3000);
-    }
+ }
+
+ 
