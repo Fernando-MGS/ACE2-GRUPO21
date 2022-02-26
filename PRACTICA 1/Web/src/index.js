@@ -1,18 +1,50 @@
-const express = require('express');
+const express= require('express');
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const { default: mongoose } = require('./database');
-const Magnitud = require('./models/esquemas')
-const PORT = process.env.PORT || 8080;
-const app = express();
 
+const PORT = process.env.PORT || 8080;
+const app= express();
+
+const UserData = [
+    {
+      id: 1,
+      year: 2016,
+      userGain: 80000,
+      userLost: 823,
+    },
+    {
+      id: 2,
+      year: 2017,
+      userGain: 45677,
+      userLost: 345,
+    },
+    {
+      id: 3,
+      year: 2018,
+      userGain: 78888,
+      userLost: 555,
+    },
+    {
+      id: 4,
+      year: 2022,
+      userGain: 90000,
+      userLost: 4555,
+    },
+    {
+      id: 5,
+      year: 2020,
+      userGain: 4300,
+      userLost: 234,
+    },
+  ];
 
 
 app.use(cors({
-  "methods": "GET,PUT,POST",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204,
-  credentials: true
+    "methods": "GET,PUT,POST",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204,
+    credentials: true
 }));
 
 // parse requests of content-type - application/json
@@ -23,127 +55,54 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-app.listen(PORT, () => console.log('Server running on port ${PORT} '));
-app.get('/', function (req, res) {
-  res.send(" WELCOME TO APP1!");
+app.listen(PORT, ()=> console.log('Server running on port ${PORT} '));
+app.get('/',  function(req, res){
+    res.send(" WELCOME TO APP1!");
 });
 
 app.use('/grafica', require('./routes/task.route'));
 
-app.get('/temperatura', async (req, res) => {
-  //const Magnitudes = await Magnitud.findOne();
-  //res.send(JSON(Magnitudes["TemperaturaInterior"]));
-  const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
-  //console.log(Magnitudes)
-  res.send(JSON.stringify(Magnitudes["TemperaturaInterior"]));
+app.get('/temperatura',  function(req, res){
+    data=  Math.random() * (60 - 15) + 15
+    
+    res.send(JSON.stringify(data));
 });
 
-
-app.get('/Magnitudes', async (req, res) => {
-  console.log("---")
-  const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
-  console.log(Magnitudes)
-  res.send(Magnitudes);
-})
-
-app.get('/Magnitudes1', async (req, res) => {
-  console.log("---")
-  const Magnitudes = await Magnitud.find()
-  console.log(Magnitudes)
-  res.send(Magnitudes.map((data)=>data.Humedad));
-})
-
-app.get('/temperaturaExt', async (req, res) => {
-  //const Magnitudes = await Magnitud.findOne();
-  //res.send(JSON(Magnitudes["TemperaturaInterior"]));
-  const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
-  //console.log(Magnitudes)
-  res.send(JSON.stringify(Magnitudes["TemperaturaExterior"]));
-
-  //res.send(JSON.stringify(data));
+app.get('/luz',  function(req, res){
+    data=  Math.random() * (500) + 0
+    
+    res.send(JSON.stringify(data));
 });
 
-
-app.get('/luz', async (req, res) => {
-  const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
-  //console.log(Magnitudes)
-  res.send(JSON.stringify(Magnitudes["Luz"]));
+app.get('/humedad',  function(req, res){
+    data=  Math.random() * (100) + 0
+    
+    res.send(JSON.stringify(data));
 });
 
-app.get('/humedad', async (req, res) => {
-  const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
-  //console.log(Magnitudes)
-  res.send(JSON.stringify(Magnitudes["Humedad"]));
-});
-
-app.get('/carbono', async (req, res) => {
-  const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
-  //console.log(Magnitudes)
-  res.send(JSON.stringify(Magnitudes["CO2"]));
-});
-
-app.get('/velocidad', function (req, res) {
-  data = Math.random() * (100 - 1) + 1
-
+app.get('/carbono',  function(req, res){
+  data=  Math.random() * (600) + 0  
   res.send(JSON.stringify(data));
 });
 
-app.get('/ChartTemp', async (req, res)=> {
-  const Magnitudes = await Magnitud.find()
-  const datos = [{
-    labels: Magnitudes.map((data) => data.Fecha),
-    datasets: [{
-      label: "Humedad del ambiente",
-      data:   Magnitudes.map((data) => data.Humedad),
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)"
-    }
-    ],
-  },{
-    labels: Magnitudes.map((data) => data.Fecha),
-    datasets: [{
-      label: "Temperatura Exterior",
-      data:   Magnitudes.map((data) => data.TemperaturaExterior),
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)"
-    }
-    ],
-  },{
-    labels: Magnitudes.map((data) => data.Fecha),
-    datasets: [{
-      label: "Temperatura Interior",
-      data:   Magnitudes.map((data) => data.TemperaturaInterior),
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)"
-    }
-    ],
-  },{
-    labels: Magnitudes.map((data) => data.Fecha),
-    datasets: [{
-      label: "CO2",
-      data:   Magnitudes.map((data) => data.CO2),
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)"
-    }
-    ],
-  },{
-    labels: Magnitudes.map((data) => data.Fecha),
-    datasets: [{
-      label: "Luz del ambiente",
-      data:   Magnitudes.map((data) => data.Luz),
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)"
-    }
-    ],
-  },
-];
-  console.log(datos)
-  res.send(datos);
+app.get('/velocidad',  function(req, res){
+  data= Math.random() * (100 - 1) + 1
+  
+  res.send(JSON.stringify(data));
+});
+
+app.get('/ChartTemp',  function(req, res){
+    const datos ={
+        labels:UserData.map((data)=>data.year),
+        datasets:[{
+            label:"Humedad del ambiente",
+            data:UserData.map((data)=>data.userGain),
+            fill:true,
+            backgroundColor: "rgba(75,192,192,0.2)",
+            borderColor: "rgba(75,192,192,1)"}
+        ],
+    };
+    res.send(datos);
 });
 
 
