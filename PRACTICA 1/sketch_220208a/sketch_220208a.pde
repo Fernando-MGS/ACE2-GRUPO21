@@ -13,6 +13,7 @@ float hum;
 float luz;
 float pluz;
 float phumedad;
+float co2;
 float velocidad = 0;
 int lastSeconds = 0;
 int tiempoConsulta = 0;
@@ -26,12 +27,13 @@ void setup() {
     float a = map(i, 0, img.pixels.length, 255, 0);
     img.pixels[i] = color(0, 153, 204, a);
   }
-  temp2=getTemp();
+  temp2=getTempExt();
   temp1=getTemp();
   luz=getLum();
   pluz=turnLum();
   hum=getHum();
   phumedad=turnHum();
+  co2=getCO2();
   velocidad = getVelocidad();
   pic=loadImage("humedad1.png");
   back=loadImage("interior5.png");
@@ -57,11 +59,12 @@ void draw() {
   lastSeconds=currentSeconds;
   if (consultar) {
     temp1=getTemp();
-    temp2=getTemp();
+    temp2=getTempExt();
     luz=getLum();
     hum=getHum();
     pluz=turnLum();
     phumedad=turnHum();
+    co2=getCO2();
   }
   float velocidadAnimacion =  velocidad;
   if(velocidad >= 100){
@@ -187,7 +190,7 @@ void draw() {
   textSize(18);
   text("Calidad del aire", 725, 390);
   textSize(65);
-  text(data, 800, 510);
+  text(co2, 800, 510);
   textSize(65);
   text("ppm", 980, 510);
   
@@ -204,6 +207,34 @@ float getTemp() {
   //println("---");
   try {
     String[] texto = loadStrings("http://localhost:8080/temperatura");
+    //println(texto[0]);
+    return Float.valueOf(texto[0]);
+  }
+  catch(Exception ex) {
+    //println(ex);
+  }
+  return temperatura;
+}
+
+float getCO2() {
+  float temperatura=0;
+  //println("---");
+  try {
+    String[] texto = loadStrings("http://localhost:8080/carbono");
+    //println(texto[0]);
+    return Float.valueOf(texto[0]);
+  }
+  catch(Exception ex) {
+    //println(ex);
+  }
+  return temperatura;
+}
+
+float getTempExt() {
+  float temperatura=0;
+  //println("---");
+  try {
+    String[] texto = loadStrings("http://localhost:8080/temperaturaExt");
     //println(texto[0]);
     return Float.valueOf(texto[0]);
   }
@@ -260,8 +291,8 @@ float getHum() {
 
 float turnLum(){
   float ret=0;
-  if(luz<400){
-    ret=(luz/400)*(PI+PI);
+  if(luz<23000){
+    ret=(luz/23000)*(PI+PI);
   }else{
     ret=PI+PI;
   }
@@ -311,6 +342,6 @@ float turnHum(){
       ret=PI+PI;
     }*/
     ret=(hum/100)*(PI+PI);
-    println(hum+"%="+ret);
+    //println(hum+"%="+ret);
   return ret;
 }
