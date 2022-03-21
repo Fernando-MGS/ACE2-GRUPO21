@@ -12,7 +12,7 @@ const int s0= 1;
 const int s1 = 2;
 const int s2 = 3;
 const int s3 = 4;
-const int out = 5;
+const int out = 7;
 
 int rojo =0;
 int verde =0;
@@ -46,51 +46,41 @@ void loop() {
   humedadDHT = sensorDHT.readHumidity();
   /////////////////////////////////////
   ////////////OBTENER COLOR//////////
-//  color(); 
-//  Serial.print("   ");  
-//  Serial.print(rojo, DEC);  
-//  Serial.print("   ");  
-//  Serial.print(verde, DEC);  
-//  Serial.print("   ");  
-//  Serial.print(azul, DEC);  
-//
-//  if (rojo < azul && verde > azul && rojo < 35) 
-//  {  
-//   Serial.println("   Rojo");    
-//  }   
-//  else if (azul < rojo && azul < verde && verde < rojo)  
-//  {  
-//   Serial.println("   Azul");        
-//  }  
-//
-//  else if (rojo > verde && azul > verde )  
-//  {  
-//   Serial.println("   Verde");       
-//  }  
-//  else{
-//  Serial.println("  ");  
-//  }
+  color();   
+  int auxcol;
+  if (rojo < azul && verde > azul && rojo < 35) 
+  {  
+  auxcol=1;   
+  }   
+  else if (azul < rojo && azul < verde && verde < rojo)  
+  {  
+   auxcol =2;        
+  }  
+
+  else if (rojo > verde && azul > verde )  
+  {  
+   auxcol = 3;       
+  }  
+  else{
+  auxcol =4;  
+  }
     
   ///////////////////////////////////
 //////////////////OBTENER DISTANCIA///////////
-//long t;
-//long d;
-//
-//digitalWrite(Trigger,HIGH);
-//delayMicroseconds(10);
-//digitalWrite(Trigger,LOW);
-//t = pulseIn(Echo,HIGH);
-//d= t/59;
-//Serial.println("Distancia: ");
-//Serial.print(d);
-//Serial.println("cm");
-//Serial.println();
-////////////////
+long t;
+long d;
+
+digitalWrite(Trigger,HIGH);
+delayMicroseconds(10);
+digitalWrite(Trigger,LOW);
+t = pulseIn(Echo,HIGH);
+d= t/59;
+
+//////////////
 ////////////fotodiodo//////////////////
-/
 ///////////////////////////////////////
 
-  
+Serial.println(String(auxcol)+","+String(humedadDHT)+","+String(d)+","+"10");
   delay(2000);
 }
 
