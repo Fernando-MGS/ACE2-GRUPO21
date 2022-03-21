@@ -3,13 +3,16 @@ const { mongo } = require('../database');
 const { Schema } = mongoose;
 
 const MagnitudEsquema = new Schema({
-    Luz: Number,
+    Suciedad1: Number,
     Humedad:Number,
-    CO2:Number,
+    CantidadAgua:Number,
+    Suciedad2:Number,
     Fecha:Date,
-    TemperaturaInterior:Number,
-    TemperaturaExterior:Number
 }, {collection: 'Magnitudes'});
+
+const TiempoEsquema = new Schema({
+    TiempoNecesario:Number
+}, {collation: 'Tiempo'});
 
 /*const TempIntEsquema = new Schema({
     TemperaturaInterior:Number,
@@ -17,4 +20,5 @@ const MagnitudEsquema = new Schema({
 }, {collection:'Magnitudes'});*/
 
 module.exports = mongoose.model('Magnitudes', MagnitudEsquema);
+module.exports = mongoose.model('Tiempo', TiempoEsquema);
 //module.exports = mongoose.model('TempInt', TempIntEsquema);

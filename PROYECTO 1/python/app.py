@@ -33,6 +33,6 @@ while True:
    else:
       db = client[dbNombre]
       collection = db['Tiempo']
-      collection.insert_one({'Tiempo':aux[1]})
+      collection.insert_one({'TiempoNecesario':aux[1]})
 
   
