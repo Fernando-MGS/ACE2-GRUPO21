@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const mongoDb = 'mongodb://localhost/Pozo';
+const mongoDb = 'mongodb://localhost/Filtro';
 
 mongoose.connect(mongoDb)
     .then(db => console.log('se conecto'))

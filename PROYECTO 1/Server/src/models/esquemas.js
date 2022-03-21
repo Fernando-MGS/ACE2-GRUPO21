@@ -10,15 +10,10 @@ const MagnitudEsquema = new Schema({
     Fecha:Date,
 }, {collection: 'Magnitudes'});
 
-const TiempoEsquema = new Schema({
-    TiempoNecesario:Number
-}, {collation: 'Tiempo'});
-
 /*const TempIntEsquema = new Schema({
     TemperaturaInterior:Number,
     Fecha:Date
 }, {collection:'Magnitudes'});*/
 
 module.exports = mongoose.model('Magnitudes', MagnitudEsquema);
-module.exports = mongoose.model('Tiempo', TiempoEsquema);
 //module.exports = mongoose.model('TempInt', TempIntEsquema);

@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const { default: mongoose } = require('./database');
-const Magnitud = require('./models/esquemas')
+const Magnitud = require('./models/esquemas');
+const Tiempo = require('./models/esquema2');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
