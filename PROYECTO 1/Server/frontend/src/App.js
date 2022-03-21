@@ -94,11 +94,11 @@ function App() {
   return (
     <Fragment>
       
-      
+      <Line data={userData} />;
       <Line data={userData1} />;   
       <Line data={userData2} />;   
       <Line data={userData3} />;   
-      <Line data={userData4} />;   
+      
     </Fragment>
   );
 }
