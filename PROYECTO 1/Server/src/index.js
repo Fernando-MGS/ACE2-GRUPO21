@@ -96,7 +96,7 @@ app.get('/ChartTemp', async (req, res)=> {
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
       label: "Suciedad en el agua",
-      data:   Magnitudes.map((data) => data.Humedad),
+      data:   Magnitudes.map((data) => data.Suciedad1),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
@@ -106,7 +106,7 @@ app.get('/ChartTemp', async (req, res)=> {
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
       label: "Humedad en el suelo del jardin",
-      data:   Magnitudes.map((data) => data.TemperaturaExterior),
+      data:   Magnitudes.map((data) => data.Humedad),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
@@ -115,8 +115,8 @@ app.get('/ChartTemp', async (req, res)=> {
   },{
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
-      label: "Suciedad post-filtrado",
-      data:   Magnitudes.map((data) => data.TemperaturaInterior),
+      label: "Cantidad de Agua",
+      data:   Magnitudes.map((data) => data.CantidadAgua),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
@@ -125,8 +125,8 @@ app.get('/ChartTemp', async (req, res)=> {
   },{
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
-      label: "Cantidad de agua almacenada",
-      data:   Magnitudes.map((data) => data.CO2),
+      label: "Suciedad Post-Filtrado",
+      data:   Magnitudes.map((data) => data.Suciedad2),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
@@ -135,8 +135,8 @@ app.get('/ChartTemp', async (req, res)=> {
   },{
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
-      label: "Tiempo requerido para la cantidad del agua",
-      data:   Magnitudes.map((data) => data.Luz),
+      label: "Prueba",
+      data:   Magnitudes.map((data) => data.Suciedad2),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"

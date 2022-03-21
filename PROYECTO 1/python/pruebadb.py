@@ -12,8 +12,8 @@ client = MongoClient(mongodb_Host)
 
 db = client[dbNombre]
 collection = db['Magnitudes']
-collection.insert_one({'Suciedad1': 10, 'Humedad': 10, 'CantidadAgua':10, 'Suciedad2':10,  'Fecha': datetime.datetime.now()})
+collection.insert_one({'Suciedad1': 12, 'Humedad': 12, 'CantidadAgua':12, 'Suciedad2':12,  'Fecha': datetime.datetime.now()})
 collection = db['Tiempo']
-collection.insert_one({'TiempoNecesario':10})
+collection.insert_one({'TiempoNecesario':12})
 
 
