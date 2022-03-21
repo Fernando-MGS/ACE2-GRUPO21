@@ -15,6 +15,11 @@ puerto_serial = 'COM3'
 arduino = serial.Serial(puerto_serial, 9600)
 time.sleep(3)
 
+db = client[dbNombre]
+collection = db['Magnitudes']
+collection.insert_one({'Suciedad1': 10, 'Humedad': 10, 'CantidadAgua':10, 'Suciedad2':10,  'Fecha': datetime.datetime.now()})
+
+
 while True:
 
    dato_leido = arduino.readline().decode('utf-8')
