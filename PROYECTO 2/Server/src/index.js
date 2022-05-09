@@ -65,22 +65,22 @@ app.get('/temperaturaExt', async (req, res) => {
 });
 
 
-app.get('/luz', async (req, res) => {
+app.get('/Metano', async (req, res) => {
   const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
   //console.log(Magnitudes)
-  res.send(JSON.stringify(Magnitudes["Luz"]));
+  res.send(JSON.stringify(Magnitudes["Metano"]));
 });
 
-app.get('/humedad', async (req, res) => {
+app.get('/Temperatura', async (req, res) => {
   const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
   //console.log(Magnitudes)
-  res.send(JSON.stringify(Magnitudes["Humedad"]));
+  res.send(JSON.stringify(Magnitudes["Temperatura"]));
 });
 
-app.get('/carbono', async (req, res) => {
-  const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Fecha": -1 } });
+app.get('/CantidadMT', async (req, res) => {
+  const Magnitudes = await Magnitud.findOne({}, {}, { sort: { "Temperatura": -1 } });
   //console.log(Magnitudes)
-  res.send(JSON.stringify(Magnitudes["CO2"]));
+  res.send(JSON.stringify(Magnitudes["Metano"]));
 });
 
 app.get('/velocidad', function (req, res) {

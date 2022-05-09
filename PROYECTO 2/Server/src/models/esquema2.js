@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 
 const TiempoEsquema = new Schema({
-    TiempoNecesario:Number
+    TiempoUsado:Number
 }, {collection: 'Tiempo'});
 
 module.exports = mongoose.model('Tiempo', TiempoEsquema);
