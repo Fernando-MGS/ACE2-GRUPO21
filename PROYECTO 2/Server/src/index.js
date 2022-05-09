@@ -95,8 +95,8 @@ app.get('/ChartTemp', async (req, res)=> {
   const datos = [{
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
-      label: "Suciedad en el agua",
-      data:   Magnitudes.map((data) => data.Suciedad1),
+      label: "Cantidad de metano vs tiempo",
+      data:   Magnitudes.map((data) => data.Metano),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
@@ -105,8 +105,18 @@ app.get('/ChartTemp', async (req, res)=> {
   },{
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
-      label: "Humedad en el suelo del jardin",
-      data:   Magnitudes.map((data) => data.Humedad),
+      label: "Temperatura del tanque vs tiempo",
+      data:   Magnitudes.map((data) => data.Temperatura),
+      fill: true,
+      backgroundColor: "rgba(75,192,192,0.2)",
+      borderColor: "rgba(75,192,192,1)"
+    }
+    ],
+  },{
+    labels: Magnitudes.map((data) => data.Temperatura),
+    datasets: [{
+      label: "Cantidad de metano vs temperatura",
+      data:   Magnitudes.map((data) => data.Metano),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
@@ -115,18 +125,8 @@ app.get('/ChartTemp', async (req, res)=> {
   },{
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
-      label: "Cantidad de Agua",
-      data:   Magnitudes.map((data) => data.CantidadAgua),
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)"
-    }
-    ],
-  },{
-    labels: Magnitudes.map((data) => data.Fecha),
-    datasets: [{
-      label: "Suciedad Post-Filtrado",
-      data:   Magnitudes.map((data) => data.Suciedad2),
+      label: "Tiempo de Uso",
+      data:   Magnitudes.map((data) => data.Metano),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
@@ -136,7 +136,7 @@ app.get('/ChartTemp', async (req, res)=> {
     labels: Magnitudes.map((data) => data.Fecha),
     datasets: [{
       label: "Prueba",
-      data:   Magnitudes.map((data) => data.Suciedad2),
+      data:   Magnitudes.map((data) => data.Metano),
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       borderColor: "rgba(75,192,192,1)"
